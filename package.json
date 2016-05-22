@@ -1,6 +1,6 @@
 {
   "name": "replace-string-at-position",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple lite string replacer when you only want to replace a substring at a particular position.",
   "main": "index.js",
   "scripts": {
