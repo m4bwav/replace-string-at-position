@@ -1,5 +1,5 @@
 import test from 'ava';
-import replaceStringAtPosition from '.';
+import replaceStringAtPosition from './';
 
 test('Text replacement', function (t) {
   var result = replaceStringAtPosition('222', '2', '3', 1);
