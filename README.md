@@ -1,4 +1,9 @@
 # replace-string-at-position
+
+[![npm package](https://nodei.co/npm/replace-string-at-position.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/replace-string-at-position/)
+
+[![Build Status](https://img.shields.io/travis/m4bwav/replace-string-at-position/master.svg)](https://travis-ci.org/m4bwav/replace-string-at-position)
+
 Simple lite string replacer when you only want to replace a substring at a particular position.
 
 ## Installation
@@ -13,11 +18,10 @@ Installation is easiest through npm:
 **replace-string-at-position** can be included as a reference.
 
 ```
-var getTitleAtUrl = require('replace-string-at-position');
+var replaceStringAtPosition = require('./index.js');
 
-getTitleAtUrl(url, function(title){
-  console.log(title);
-});
+var result = replaceStringAtPosition('222', '2', '3', 1);
+//result => 232
 ```
 
 ## CLI
