@@ -28,10 +28,11 @@ $ npm install --global replace-string-at-position
 
 ```
   Usage
-    $ replace-string-at-position "<url>"
+    $ replace-string-at-position <input> <source> <new> <position>
 
   Example
-    $ replace-string-at-position "http://www.google.com"
+    $ replace-string-at-position 222 2 3 1
+    //=> 232
 ```
 
 ## License
