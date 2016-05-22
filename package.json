@@ -1,0 +1,48 @@
+{
+  "name": "replace-string-at-position",
+  "version": "1.0.0",
+  "description": "Simple lite string replacer when you only want to replace a substring at a particular position.",
+  "main": "index.js",
+  "scripts": {
+    "test": "snyk test && xo && nyc ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "travis-after-success": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m4bwav/replace-string-at-position.git"
+  },
+  "keywords": [
+    "string",
+    "replace"
+  ],
+  "tags": [
+    "string",
+    "replace"
+  ],
+  "author": "Mark Rogers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m4bwav/replace-string-at-position/issues"
+  },
+  "homepage": "https://github.com/m4bwav/replace-string-at-position#readme",
+  "devDependencies": {
+    "ava": "*",
+    "codecov.io": "^0.1.6",
+    "coveralls": "^2.11.9",
+    "execa": "^0.4.0",
+    "nyc": "^6.4.4",
+    "snyk": "^1.14.3",
+    "xo": "^0.15.1"
+  },
+  "xo": {
+    "rules": {
+      "xo/no-process-exit": "off",
+      "linebreak-style": "off",
+      "indent": [
+        "error",
+        2
+      ]
+    }
+  }
+}
