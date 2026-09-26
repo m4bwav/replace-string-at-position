@@ -4,14 +4,14 @@
 
 ## Current state
 
-Updated 2026-09-25 (night). 2.0.0-beta.1 is live under `next` and verified from the registry (verify-published run 36217617146). **2.0.0 is staged** under `latest`: release run 36217701865, stage id 102e8d6b-9cb7-4076-b7fc-3611afdc4191, provenance signed; the GitHub Release v2.0.0 exists. npm `latest` stays 1.0.4 until the approval.
+Updated 2026-09-25 (night). 2.0.0-beta.1 is live under `next` and verified from the registry (verify-published run 36217617146). **2.0.0 is released** under `latest` and verified from the registry (verify-published run 36217874285, signatures and attestation verified).
 
 - Plan and evidence: [plans/2026-09-25-modernization-and-v2-release.md](plans/2026-09-25-modernization-and-v2-release.md), [log.md](log.md).
 - The merged branch `v2` still exists on GitHub; delete it with the maintainer's OK.
 
 ## In progress
 
-- Waiting for the maintainer to approve the staged 2.0.0 on npmjs.com.
+- Phase 7 wrap-up is left (below). npmjs.com's main page may still show 1.0.4's README from its cache; the registry serves the new one.
 
 ## Decisions made this session
 
@@ -25,4 +25,4 @@ Updated 2026-09-25 (night). 2.0.0-beta.1 is live under `next` and verified from 
 
 ## Next single action
 
-After the approval: `npm view replace-string-at-position dist-tags` (latest = 2.0.0), `gh workflow run verify-published.yml -R m4bwav/replace-string-at-position -f version=2.0.0`, `npm audit signatures` in a scratch project, `npm view replace-string-at-position dist.attestations`. Then Phase 7: inventory row, kickoff prompt corrections, lessons into the skill, and the heads-up for markdown-plain-link-replacer (it can move to ^2.0.0, plan D15).
+Phase 7: the inventory row, the kickoff prompt's corrections, lessons into the skill, and the heads-up for markdown-plain-link-replacer (it can move to ^2.0.0, plan D15). Check that https://www.npmjs.com/package/replace-string-at-position shows the 2.0.0 README.
