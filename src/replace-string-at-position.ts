@@ -1,16 +1,10 @@
 // Names a rejected argument in an error message without calling anything on it (no toString, no getters).
 function describe(value: unknown): string {
-  if (value === null) {
-    return 'null';
-  }
-
-  if (Array.isArray(value)) {
-    return 'an array';
-  }
-
   switch (typeof value) {
     case 'string': {
-      return `the string ${JSON.stringify(value.length > 20 ? `${value.slice(0, 20)}...` : value)}`;
+      // Cut by code points, so a surrogate pair is never split; the cut also bounds the message's size.
+      const codePoints = [...value.slice(0, 40)];
+      return `the string ${JSON.stringify(codePoints.length > 20 ? `${codePoints.slice(0, 20).join('')}...` : value)}`;
     }
 
     case 'number': {
@@ -18,7 +12,8 @@ function describe(value: unknown): string {
     }
 
     case 'bigint': {
-      return `the bigint ${value}n`;
+      // Not its digits: printing a huge BigInt is unbounded work on caller input.
+      return 'a bigint';
     }
 
     case 'undefined': {
@@ -26,7 +21,16 @@ function describe(value: unknown): string {
     }
 
     case 'object': {
-      return 'an object';
+      if (value === null) {
+        return 'null';
+      }
+
+      try {
+        return Array.isArray(value) ? 'an array' : 'an object';
+      } catch {
+        // Array.isArray throws for a revoked Proxy.
+        return 'an object';
+      }
     }
 
     case 'boolean':
@@ -41,7 +45,8 @@ function describe(value: unknown): string {
 }
 
 // A string primitive, or the value of a String wrapper object (1.0.4 accepted both). The brand check works across realms and
-// rejects array-likes such as {length: 3}, which 1.0.4 read as three characters.
+// rejects array-likes such as {length: 3}, which 1.0.4 read as three characters. It reads the object's internal value and
+// runs no caller code: an overridden valueOf, Symbol.toPrimitive or substring is ignored, and a Proxy is refused (1.0.4 called them).
 function toText(value: unknown, name: string): string {
   if (typeof value === 'string') {
     return value;

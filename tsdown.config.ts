@@ -36,6 +36,8 @@ export default defineConfig([
     // The entry's only export is its default, so tsdown's cjsDefault (on by default) writes it as `module.exports = ...` and the
     // declaration as `export = ...`. Setting rolldown's `exports: 'default'` instead fails the declaration build (tsdown 0.23.0).
     cjsDefault: true,
+    // 1.0.4's index.js was strict; without the directive the function would be sloppy-mode and gain own `caller` and `arguments`.
+    banner: {js: '\'use strict\';'},
     outputOptions: {comments: {jsdoc: false}},
     hooks: {'build:done': dropDeclarationMapComment('dist/index.d.cts')},
   },

@@ -28,6 +28,9 @@ const golden = fileURLToPath(new URL('../golden/1.0.4.json', import.meta.url));
 
 const RUNTIME_FIXTURES = ['esm-node', 'cjs-node'];
 const TYPE_FIXTURES = ['ts-nodenext-esm', 'ts-nodenext-cjs', 'ts-bundler', 'ts-node10'];
+// TypeScript 5 with esModuleInterop off, the import forms old CommonJS projects write (TypeScript 6 no longer allows turning interop off).
+const TYPESCRIPT_5 = '5.9.3';
+const TS5_FIXTURE = 'ts5-cjs-interop-off';
 const RUNTIME_NAMES = {bun: 'Bun', deno: 'Deno'};
 
 const registryPackage = process.env.CONSUMER_PACKAGE;
@@ -89,9 +92,10 @@ before(async () => {
   const nodeTypes = require('@types/node/package.json').version;
   // --prefer-offline only for the tarball: a registry install must see a version published minutes ago.
   const offline = registryPackage === undefined ? ' --prefer-offline' : '';
-  await mustSucceed('npm install', shell(`npm install --no-audit --no-fund${offline} "${spec}" typescript@${typescript} @types/node@${nodeTypes}`, workspace));
+  const packages = `"${spec}" typescript@${typescript} typescript5@npm:typescript@${TYPESCRIPT_5} @types/node@${nodeTypes}`;
+  await mustSucceed('npm install', shell(`npm install --no-audit --no-fund${offline} ${packages}`, workspace));
 
-  for (const fixture of [...RUNTIME_FIXTURES, ...TYPE_FIXTURES]) {
+  for (const fixture of [...RUNTIME_FIXTURES, ...TYPE_FIXTURES, TS5_FIXTURE]) {
     await cp(path.join(fixtures, fixture), path.join(workspace, fixture), {recursive: true});
   }
 
@@ -120,6 +124,15 @@ test('cjs-node: require() from a CommonJS module, as old callers used it', async
   const result = await node(['cjs-node/index.js'], workspace);
   assert.equal(result.code, 0, result.output);
   assert.equal(result.stdout.trim(), 'cjs-node ok');
+});
+
+test(`${TS5_FIXTURE}: TypeScript ${TYPESCRIPT_5} with esModuleInterop off compiles import = require(), import * as and the default import, and the output runs`, async () => {
+  const tsc = path.join(workspace, 'node_modules', 'typescript5', 'bin', 'tsc');
+  const compiled = await node([tsc, '--project', TS5_FIXTURE], workspace);
+  assert.equal(compiled.code, 0, compiled.output);
+  const result = await node([path.join(TS5_FIXTURE, 'out', 'index.js')], workspace);
+  assert.equal(result.code, 0, result.output);
+  assert.equal(result.stdout.trim(), `${TS5_FIXTURE} ok`);
 });
 
 for (const fixture of TYPE_FIXTURES) {
