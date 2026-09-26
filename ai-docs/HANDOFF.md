@@ -4,15 +4,14 @@
 
 ## Current state
 
-Updated 2026-09-25 (night). v2 is on `master` (#2 as 1c96681, review fixes #3 as bbcb567, version commit 2fe188a). `2.0.0-beta.1` is **staged** on npm under `next`: release run 36217447038, stage id c836e796-b213-4fae-8f56-06789cb71e7b, provenance signed; GitHub prerelease v2.0.0-beta.1 exists. npm `latest` is still 1.0.4.
+Updated 2026-09-25 (night). 2.0.0-beta.1 is live under `next` and verified from the registry (verify-published run 36217617146). **2.0.0 is staged** under `latest`: release run 36217701865, stage id 102e8d6b-9cb7-4076-b7fc-3611afdc4191, provenance signed; the GitHub Release v2.0.0 exists. npm `latest` stays 1.0.4 until the approval.
 
 - Plan and evidence: [plans/2026-09-25-modernization-and-v2-release.md](plans/2026-09-25-modernization-and-v2-release.md), [log.md](log.md).
-- Phase 4 is complete: webhooks deleted (0 left), 0 alerts, 0 open pull requests, settings, scanning, ruleset 24031520.
-- The merged branch `v2` still exists on GitHub (it merged before delete-branch-on-merge was on); delete it with the maintainer's OK.
+- The merged branch `v2` still exists on GitHub; delete it with the maintainer's OK.
 
 ## In progress
 
-- Waiting for the maintainer to approve the staged 2.0.0-beta.1 on npmjs.com (Staged Packages tab, 2FA).
+- Waiting for the maintainer to approve the staged 2.0.0 on npmjs.com.
 
 ## Decisions made this session
 
@@ -26,4 +25,4 @@ Updated 2026-09-25 (night). v2 is on `master` (#2 as 1c96681, review fixes #3 as
 
 ## Next single action
 
-After the approval: `npm view replace-string-at-position dist-tags` (next = 2.0.0-beta.1, latest = 1.0.4), `gh workflow run verify-published.yml -R m4bwav/replace-string-at-position -f version=2.0.0-beta.1`, and `npm audit signatures` in a scratch project that installed `replace-string-at-position@next`. Then Phase 6: date the CHANGELOG heading (`## [2.0.0] - YYYY-MM-DD`), commit, `npm version 2.0.0`, `git push --follow-tags origin master`, stop for the approval, verify the same way plus `gh release view v2.0.0` and `npm view replace-string-at-position dist.attestations`.
+After the approval: `npm view replace-string-at-position dist-tags` (latest = 2.0.0), `gh workflow run verify-published.yml -R m4bwav/replace-string-at-position -f version=2.0.0`, `npm audit signatures` in a scratch project, `npm view replace-string-at-position dist.attestations`. Then Phase 7: inventory row, kickoff prompt corrections, lessons into the skill, and the heads-up for markdown-plain-link-replacer (it can move to ^2.0.0, plan D15).

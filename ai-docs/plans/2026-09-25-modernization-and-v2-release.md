@@ -115,9 +115,9 @@ CommonJS: `module.exports = replaceStringAtPosition`, with `replaceStringAtPosit
 - [x] Alerts 0; webhooks removed (OK given 2026-09-25, all three deleted); repository settings, secret scanning and push protection, private vulnerability reporting, workflow permissions read (done 2026-09-25)
 ### Phase 5: release rehearsal
 - [x] The maintainer added the trusted publisher (2026-09-25)
-- [ ] 2.0.0-beta.1 tagged (2fe188a) and staged (run 36217447038, stage c836e796); **stop** for the approval; verified from the registry (run id)
+- [x] 2.0.0-beta.1 tagged (2fe188a) and staged (run 36217447038, stage c836e796); approved by the maintainer; verified from the registry (verify-published run 36217617146, 15 jobs green; npm audit signatures: 1 verified signature, 1 verified attestation)
 ### Phase 6: release
-- [ ] Changelog dated; 2.0.0 tagged and staged; **stop** for the approval; verified from the registry; GitHub Release; provenance
+- [ ] Changelog dated (71dc220); 2.0.0 tagged (e0ac9d3) and staged (run 36217701865, stage 102e8d6b-9cb7-4076-b7fc-3611afdc4191, tag latest); **stop** for the approval; verified from the registry; GitHub Release; provenance
 ### Phase 7: wrap-up
 - [ ] HANDOFF.md around standing work; inventory row; lessons into the skill; what the kickoff prompt got wrong
 
