@@ -1,6 +1,6 @@
 {
   "name": "replace-string-at-position",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "Replace the part of a string at a given position with new text, by the length of the text it replaces. Zero dependencies, TypeScript, ESM and CommonJS, Node 20+.",
   "license": "MIT",
   "repository": {
