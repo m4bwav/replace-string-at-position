@@ -2,7 +2,7 @@
 
 All notable changes to this package are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package uses [Semantic Versioning](https://semver.org/).
 
-## [2.0.0] - Unreleased
+## [2.0.0] - 2026-09-25
 
 **The compatibility promise.** Every call with three strings (or `String` objects) and an integer position from 0 to the text's length returns exactly what 1.0.4 returned, and `require('replace-string-at-position')` still returns the function. The test suite checks this against 71 answers recorded from the published 1.0.4, on both builds and every supported Node line. Every other call now throws. Those calls are listed under Changed. Most of them returned damaged text, but a few happened to give a sensible answer, and those throw now too: a number as `newString` (`('item #0', '0', 5, 6)` gave `'item #5'`), a `Number` object or `true` as the position, an array such as `['b']` as `sourceString`. Convert such arguments with `String()` or `Number()` first. A `String` object is read by its own string value: an overridden `valueOf`, `Symbol.toPrimitive` or `substring` on it is ignored, and a `Proxy` is refused, where 1.0.4 called them.
 
