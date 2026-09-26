@@ -15,7 +15,7 @@ The first run of the package-modernize skill (github.com/m4bwav/package-moderniz
 
 ## Status
 
-Active. Phases 0 to 3 done on 2026-09-25, and Phase 4's settings. The maintainer merged pull request #2 (1c96681) without ruling on the table, so the recommendations stand (D3c throw, D4 2.0.0 only). The review fixes are in pull request #3. Waiting on: the OK to delete the three webhooks (D11), then the trusted publisher (Phase 5).
+Active. Phases 0 to 4 done on 2026-09-25 (#2 merged as 1c96681, #3 as bbcb567, webhooks deleted with the maintainer's OK, settings and ruleset applied). Phase 5: 2.0.0-beta.1 staged on npm under `next` (release run 36217447038, stage id c836e796-b213-4fae-8f56-06789cb71e7b, provenance signed); waiting for the maintainer's approval on npmjs.com.
 
 ## Goal
 
@@ -112,10 +112,10 @@ CommonJS: `module.exports = replaceStringAtPosition`, with `replaceStringAtPosit
 - [x] Independent read-only review: 7 findings (1 risk, 6 nits), all fixed in pull request #3 (branch review-fixes)
 ### Phase 4: CI, settings, merge, cleanup
 - [x] CI green (run 36215519020); ruleset 24031520 on master; merged by the maintainer as a merge commit (1c96681)
-- [ ] Alerts 0 (done); webhooks removed (waiting for the OK); repository settings, secret scanning and push protection, private vulnerability reporting, workflow permissions read (done 2026-09-25)
+- [x] Alerts 0; webhooks removed (OK given 2026-09-25, all three deleted); repository settings, secret scanning and push protection, private vulnerability reporting, workflow permissions read (done 2026-09-25)
 ### Phase 5: release rehearsal
-- [ ] The maintainer adds the trusted publisher (fields in D13). **Stop.**
-- [ ] 2.0.0-beta.1 tagged and staged; **stop** for the approval; verified from the registry (run id)
+- [x] The maintainer added the trusted publisher (2026-09-25)
+- [ ] 2.0.0-beta.1 tagged (2fe188a) and staged (run 36217447038, stage c836e796); **stop** for the approval; verified from the registry (run id)
 ### Phase 6: release
 - [ ] Changelog dated; 2.0.0 tagged and staged; **stop** for the approval; verified from the registry; GitHub Release; provenance
 ### Phase 7: wrap-up
