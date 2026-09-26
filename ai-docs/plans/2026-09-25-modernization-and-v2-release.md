@@ -15,7 +15,7 @@ The first run of the package-modernize skill (github.com/m4bwav/package-moderniz
 
 ## Status
 
-Active. Phases 0 and 1 done on 2026-09-25; waiting at the plan review.
+Active. Phases 0 to 3 done on 2026-09-25, and Phase 4's settings. The maintainer merged pull request #2 (1c96681) without ruling on the table, so the recommendations stand (D3c throw, D4 2.0.0 only). The review fixes are in pull request #3. Waiting on: the OK to delete the three webhooks (D11), then the trusted publisher (Phase 5).
 
 ## Goal
 
@@ -56,7 +56,7 @@ Case numbers are indexes into `test/golden/1.0.4.json`.
 
 | # | Question | Recommendation | Why | Alternative |
 |---|---|---|---|---|
-| D1 | The compatibility promise | Every call with three strings (or `String` objects) and an integer position from 0 to the text's length returns exactly what 1.0.4 returned. The golden suite checks all 26 such cases on both builds; the other 45 are named exceptions that assert the error class. | The two dependents only make such calls; everything outside it returned text no caller could want. | Keep all 71 cases exact (a packaging-only major); then D3 and D7 fall away. |
+| D1 | The compatibility promise | Every call with three strings (or `String` objects) and an integer position from 0 to the text's length returns exactly what 1.0.4 returned. The golden suite checks all 26 such cases on both builds; the other 45 are named exceptions that assert the error class. | The two dependents only make such calls; most calls outside it returned damaged text; the few that happened to work (a number as `newString`, a `Number` object as the position) are named in the changelog with the `String()` or `Number()` fix. `String` objects are read by their internal value; overrides and Proxies are not honoured (Phase 3 review, 2026-09-25). | Keep all 71 cases exact (a packaging-only major); then D3 and D7 fall away. |
 | D2 | Export shape | CommonJS: `require()` returns the function, which also carries `.default` and `.replaceStringAtPosition` pointing to itself. ESM: a default export and the named export. Types: `.d.cts` with `export =` a function-and-namespace, `.d.mts` with both exports. Proven with attw (node10, node16-cjs, node16-esm, bundler) and the consumer fixtures, including `require()` without `.default`. How tsdown produces it is settled in Phase 2 (`outputOptions.exports: 'default'` on the CommonJS entry first). | Keeps the 2016 call pattern, and covers the two shapes transpiled callers use. | Named export only in ESM, CommonJS function only: smaller, but `import x from` users of a bundler would still work while `.default` users would not. |
 | D3 | Behaviour at the edges, per case | a) Missing or non-number position: TypeError. b) Negative, NaN, fractional: RangeError. c) Past the end (`position > text.length`): RangeError. d) Non-string text arguments: TypeError, `String` objects accepted. e) Kept: source compared by length only, source overrunning the end, UTF-16 positions, extra arguments. | a, b and d are the corrupted results above. c is a judgement: clamping hides a caller's bug, and both dependents pass indexes inside the text. | c: keep clamping integer positions past the end (4 more cases stay exact, matching `slice`; `Infinity` still throws). d: keep coercing `newString` as `String.prototype.replace` does. |
 | D4 | Whether a major is warranted, and what a patch could do instead | 2.0.0. The package shape changes (an `exports` map closes deep imports, `engines` gains a floor, ESM appears) and D3 refuses calls 1.0.4 accepted. No 1.x release, and 1.0.4 is not deprecated. | A patch, 1.0.5, could ship the same `index.js` with a `files` allowlist, a hand-written `index.d.ts`, the README fixed and provenance, and both dependents would receive it through `^1.0.4`. That buys a cleaner tarball for strip-mentions' users and costs a second release pipeline on a branch; the package works as it is. Deprecating 1.0.4 would warn every strip-mentions install for no safety gain. | Also release 1.0.5 from a `v1` branch before 2.0.0 (one more rehearsal, one more stop). |
@@ -103,16 +103,16 @@ CommonJS: `module.exports = replaceStringAtPosition`, with `replaceStringAtPosit
 ### Phase 1: plan
 - [x] This plan and the decision record [../decisions/2026-09-25-v2-shape-refuse-corrupting-calls-keep-require.md](../decisions/2026-09-25-v2-shape-refuse-corrupting-calls-keep-require.md). **Stop**: the maintainer rules on the table; questions: D3c, D4, D11 webhook deletion, D14 settings.
 ### Phase 2: rewrite on branch v2
-- [ ] Remove the D12 files; add the templates; deny dev-only install scripts
-- [ ] Golden test first, green on the first build; then `src/`, the rest of `test/`, README, CHANGELOG, SECURITY.md, AGENTS.md
-- [ ] Verified on Node 20, 22, 24, 26 and from a fresh clone (log)
-- [ ] Workflows and Dependabot added, actionlint clean
-- [ ] Pushed; pull request opened with a "For review" list. **Stop.**
+- [x] Remove the D12 files; add the templates; deny dev-only install scripts
+- [x] Golden test first, green on the first build; then `src/`, the rest of `test/`, README, CHANGELOG, SECURITY.md, AGENTS.md
+- [x] Verified on Node 20, 22, 24, 26 and from a fresh clone (log)
+- [x] Workflows and Dependabot added, actionlint clean (and zizmor)
+- [x] Pushed; pull request #2 opened with a "For review" list; the maintainer merged it (1c96681)
 ### Phase 3: review
-- [ ] Independent read-only review (prompts/review-subagent.md in the skill); findings fixed or answered; summary on the pull request
+- [x] Independent read-only review: 7 findings (1 risk, 6 nits), all fixed in pull request #3 (branch review-fixes)
 ### Phase 4: CI, settings, merge, cleanup
-- [ ] CI green (run id); ruleset on master; squash-merge after the maintainer's review (SHA)
-- [ ] Alerts 0; webhooks removed (with the OK); repository settings; secret scanning and push protection; private vulnerability reporting; workflow permissions read
+- [x] CI green (run 36215519020); ruleset 24031520 on master; merged by the maintainer as a merge commit (1c96681)
+- [ ] Alerts 0 (done); webhooks removed (waiting for the OK); repository settings, secret scanning and push protection, private vulnerability reporting, workflow permissions read (done 2026-09-25)
 ### Phase 5: release rehearsal
 - [ ] The maintainer adds the trusted publisher (fields in D13). **Stop.**
 - [ ] 2.0.0-beta.1 tagged and staged; **stop** for the approval; verified from the registry (run id)

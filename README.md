@@ -52,7 +52,7 @@ Returns `originalString` with the part that starts at `position` and is as long 
 | `newString` | `string` | The text to put in its place. |
 | `position` | `number` | Where the replaced text starts: an integer from 0 to `originalString.length`. |
 
-Throws a `TypeError` when a text argument is not a string (a `String` object is fine) or `position` is not a number, and a `RangeError` when `position` is not an integer from 0 to `originalString.length`. Each message names the argument and what it got.
+Throws a `TypeError` when a text argument is not a string (a `String` object is fine and is read by its own value, ignoring any overridden `valueOf`) or `position` is not a number, and a `RangeError` when `position` is not an integer from 0 to `originalString.length`. Each message names the argument and what it got.
 
 ## Behaviour at the edges
 
@@ -73,6 +73,7 @@ Throws a `TypeError` when a text argument is not a string (a `String` object is 
 Every call with three strings and an integer position from 0 to the text's length returns what 1.0.4 returned; the tests check it against answers recorded from the published 1.0.4. The changes:
 
 - Node 20 or later, and only the package name can be imported (no `replace-string-at-position/index.js`).
+- A number as `newString` (1.0.4 turned `5` into `'5'`) now throws; pass `String(value)`.
 - Calls that 1.0.4 answered with damaged text now throw: a missing or non-number position (1.0.4 returned the text twice or joined the position as text), a negative, `NaN` or fractional position, a position past the end (1.0.4 appended), and a text argument that is not a string (1.0.4 wrote `null` or `[object Object]` into the result). The full list is in [CHANGELOG.md](CHANGELOG.md).
 - The command-line tool described in the old README is gone; it was never installable.
 

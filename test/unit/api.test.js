@@ -26,6 +26,12 @@ describe('export shapes (plan D2)', () => {
     assert.equal(module.default.length, 4);
   });
 
+  test('the CommonJS build is strict, as 1.0.4 was: the function has no own caller or arguments', () => {
+    const library = require('../../dist/index.cjs');
+    assert.equal(Object.hasOwn(library, 'caller'), false);
+    assert.equal(Object.hasOwn(library, 'arguments'), false);
+  });
+
   test('a detached call works (the function uses no `this`)', () => {
     const {replaceStringAtPosition: detached} = require('../../dist/index.cjs');
     assert.equal(detached('abc', 'b', 'X', 1), 'aXc');
@@ -87,7 +93,7 @@ for (const {name, lib} of builds) {
         [['abcdef', {length: 3}, 'X', 1], 'Expected `sourceString` to be a string, got an object'],
         [['abcdef', 5, 'X', 1], 'Expected `sourceString` to be a string, got 5'],
         [['abcdef', 'b', null, 1], 'Expected `newString` to be a string, got null'],
-        [['abcdef', 'b', 1n, 1], 'Expected `newString` to be a string, got the bigint 1n'],
+        [['abcdef', 'b', 1n, 1], 'Expected `newString` to be a string, got a bigint'],
         [['abcdef', 'b', Symbol('x'), 1], 'Expected `newString` to be a string, got a symbol'],
         [['abcdef', 'b', () => 'x', 1], 'Expected `newString` to be a string, got a function'],
       ];
@@ -104,7 +110,7 @@ for (const {name, lib} of builds) {
         ['a very long position string indeed', 'the string "a very long position..."'],
         [true, 'a boolean'],
         [[2], 'an array'],
-        [1n, 'the bigint 1n'],
+        [1n, 'a bigint'],
         // eslint-disable-next-line no-new-wrappers, unicorn/new-for-builtins
         [new Number(2), 'an object'],
       ];
@@ -133,6 +139,27 @@ for (const {name, lib} of builds) {
       for (const args of [[trap, 'b', 'X', 1], ['abc', trap, 'X', 1], ['abc', 'b', trap, 1], ['abc', 'b', 'X', trap]]) {
         assert.throws(() => replace(...args), TypeError);
       }
+    });
+
+    test('a String object is read by its internal value: overrides are ignored and a Proxy is refused (1.0.4 called them)', () => {
+      /* eslint-disable no-new-wrappers, unicorn/new-for-builtins -- the String objects under test */
+      const overridden = Object.assign(new String('X'), {valueOf: () => 'Z', toString: () => 'Z', substring: () => 'Q'});
+      assert.equal(replace('abc', 'b', overridden, 1), 'aXc');
+      const ownSubstring = Object.assign(new String('abc'), {substring: () => 'Q'});
+      assert.equal(replace(ownSubstring, 'b', 'X', 1), 'aXc');
+      assert.throws(() => replace('abc', new Proxy(new String('b'), {}), 'X', 1), {name: 'TypeError', message: 'Expected `sourceString` to be a string, got an object'});
+      /* eslint-enable no-new-wrappers, unicorn/new-for-builtins -- end of the String objects */
+    });
+
+    test('error messages stay short and well-formed for odd values', () => {
+      // A long string is cut at 20 code points, never inside a surrogate pair.
+      assert.throws(() => replace('abc', 'b', 'X', 'a😀'.repeat(20)), {message: `Expected \`position\` to be a number, got the string "${'a😀'.repeat(10)}..."`});
+      // A huge BigInt is not printed.
+      assert.throws(() => replace('abc', 'b', 'X', 2n ** 4096n), {message: 'Expected `position` to be a number, got a bigint'});
+      // A revoked Proxy gets the package's own message, not the engine's.
+      const {proxy, revoke} = Proxy.revocable({}, {});
+      revoke();
+      assert.throws(() => replace('abc', 'b', proxy, 1), {name: 'TypeError', message: 'Expected `newString` to be a string, got an object'});
     });
   });
 }

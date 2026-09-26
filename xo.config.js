@@ -6,7 +6,8 @@ const xoConfig = [
   {
     // The type fixture imports the built package, so it only resolves after a build; the consumer fixtures type-check it against the installed tarball instead.
     // The capture scripts ran in scratch projects against the old package and are kept exactly as they were run; the golden JSON files are captured data.
-    ignores: ['ai-docs/**', 'test/consumers/types/**', 'test/golden/*.cjs', 'test/golden/*.json'],
+    // The TypeScript 5 fixture uses `import = require()` on purpose and is compiled by its own TypeScript in the consumer workspace.
+    ignores: ['ai-docs/**', 'test/consumers/types/**', 'test/consumers/ts5-cjs-interop-off/**', 'test/golden/*.cjs', 'test/golden/*.json'],
   },
   {
     files: ['**/*.md'],
