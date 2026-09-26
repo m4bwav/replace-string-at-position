@@ -4,7 +4,7 @@ Rules for any AI agent (Claude Code, Copilot, Cursor, Codex) working in this rep
 
 ## What this is
 
-The npm package `replace-string-at-position`: replaces the part of a string that starts at a given position, as long as a given source string, with new text. On npm since 2016; 1.0.4 (2016-05-22, one ES5 file, no build) is the published version until 2.0.0 ships. Version 2 is TypeScript in `src/`, built by tsdown into ESM and CommonJS with a declaration file for each, with no runtime dependencies. The plan is `ai-docs/plans/2026-09-25-modernization-and-v2-release.md`; start with `ai-docs/HANDOFF.md` to see how far it has got. Until the plan's Phase 2 lands on `master`, the root still holds the 1.0.4 files (`index.js`, `cli.js`, `test.js`, `.travis.yml`).
+The npm package `replace-string-at-position`: replaces the part of a string that starts at a given position, as long as a given source string, with new text. On npm since 2016; 1.0.4 (2016-05-22, one ES5 file, no build) is the published version until 2.0.0 ships. Version 2 is TypeScript in `src/`, built by tsdown into ESM and CommonJS with a declaration file for each, with no runtime dependencies. The plan is `ai-docs/plans/2026-09-25-modernization-and-v2-release.md`; start with `ai-docs/HANDOFF.md` to see how far it has got.
 
 ## Rules
 
@@ -24,7 +24,7 @@ The npm package `replace-string-at-position`: replaces the part of a string that
 - **No AI attribution anywhere**: no Co-Authored-By trailers, no "generated with" lines in commits, pull requests or files.
 - **Windows note.** Write files with an editor tool, not shell heredocs (they lose backslashes). Check line endings by counting byte 13 with node; Git Bash's grep cannot see carriage returns. Spawn npm and npx through a shell from Node; they are `.cmd` shims. `.gitattributes` keeps the repository LF.
 
-## Commands (from Phase 2 on)
+## Commands
 
 ```bash
 npm ci
@@ -43,10 +43,10 @@ tsdown needs Node 22.18+ or 24 to build; the built output and the tests run on N
 
 ## Layout and traps
 
-- `src/index.ts` holds the function and its argument checks; nothing else in `src/`.
+- `src/replace-string-at-position.ts` holds the function and its argument checks. Two entries import it: `src/index.ts` (ESM: default and named export) and `src/require.ts` (CommonJS: the function itself, carrying `.default` and `.replaceStringAtPosition`, so `require()` returns it as 1.0.4 did). tsdown builds each entry in its own config (`tsdown.config.ts`); its cjsDefault turns the lone default export into `module.exports =` and the declaration into `export =`. Setting rolldown's `output.exports: 'default'` instead fails the declaration build.
 - `test/golden/1.0.4.json` was captured from the published 1.0.4 by the capture script beside it, in a scratch project. Never regenerate it from this repository's code. `codec.cjs` keeps NaN, -0, Infinity, undefined and `String` objects through JSON; the capture and the golden test share it. Lint ignores the golden files and the capture scripts, which are kept as they were run.
 - Tests import `dist/`, never `src/`, and run against both builds (`test/helpers/builds.js`). The npm scripts name every test file, because plain `node --test` would also run the fixtures and the capture scripts.
-- `package.json` `main`, `module`, `types` and `exports` are rewritten by tsdown on every build (`exports: true`); edit them in `tsdown.config.ts`, not by hand.
+- `package.json` `main`, `module`, `types` and `exports` are written by hand: two tsdown configs cannot share `exports: true`. `test/package/shape.test.js` pins them.
 - `xo --fix` rewrites code: stage your work first and read the diff it makes to `src/`.
 - CI (`.github/workflows/ci.yml`) installs and builds on Node 24 in every job, because tsdown cannot run on Node 20. It then switches to the job's Node line and runs `npm run test:dist` and the consumer fixtures. The ruleset on `master` requires only the final `ci` job, which passes when every other job passed.
 - The npm trusted publisher names `release.yml`, so renaming the file breaks publishing. Its `publish` job, the only one with `id-token` and `contents` set to write, stages the tarball the `build` job tested and runs no dependency code. Within 24 hours of a publish, Deno needs `--minimum-dependency-age=0` to install the new version.

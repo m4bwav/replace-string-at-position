@@ -1,48 +1,68 @@
 {
   "name": "replace-string-at-position",
   "version": "1.0.4",
-  "description": "Simple lite string replacer when you only want to replace a substring at a particular position.",
-  "main": "index.js",
-  "scripts": {
-    "test": "snyk test && xo && nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "travis-after-success": "nyc report --reporter=text-lcov | coveralls"
-  },
+  "description": "Replace the part of a string at a given position with new text, by the length of the text it replaces. Zero dependencies, TypeScript, ESM and CommonJS, Node 20+.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/m4bwav/replace-string-at-position.git"
   },
-  "keywords": [
-    "string",
-    "replace"
-  ],
-  "tags": [
-    "string",
-    "replace"
-  ],
-  "author": "Mark Rogers",
-  "license": "MIT",
+  "homepage": "https://github.com/m4bwav/replace-string-at-position#readme",
   "bugs": {
     "url": "https://github.com/m4bwav/replace-string-at-position/issues"
   },
-  "homepage": "https://github.com/m4bwav/replace-string-at-position#readme",
-  "devDependencies": {
-    "ava": "*",
-    "codecov.io": "^0.1.6",
-    "coveralls": "^2.11.9",
-    "execa": "^0.4.0",
-    "nyc": "^6.4.4",
-    "snyk": "^1.14.3",
-    "xo": "^0.15.1"
+  "author": "Mark Rogers (https://www.markdavidrogers.com)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
-  "xo": {
-    "rules": {
-      "xo/no-process-exit": "off",
-      "linebreak-style": "off",
-      "indent": [
-        "error",
-        2
-      ]
-    }
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "npm run build && npm run test:dist",
+    "test:dist": "node --test test/golden/golden.test.js test/unit/api.test.js test/unit/property.test.js test/package/shape.test.js",
+    "test:consumers": "npm run build && node --test test/consumers/consumers.test.js",
+    "coverage": "npm run build && c8 --check-coverage --lines 95 --branches 90 --exclude-after-remap --include \"src/**\" --reporter text --reporter lcov node --test test/golden/golden.test.js test/unit/api.test.js test/unit/property.test.js",
+    "lint": "xo",
+    "typecheck": "tsc --noEmit",
+    "check": "publint && attw --pack . && npm pack --dry-run",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run check && npm test"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist"
+  ],
+  "keywords": [
+    "string",
+    "replace",
+    "substring",
+    "splice",
+    "position",
+    "index"
+  ],
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@tsconfig/node-ts": "^23.6.4",
+    "@tsconfig/node20": "^20.1.10",
+    "@types/node": "^24.13.6",
+    "c8": "^12.0.0",
+    "publint": "^0.3.24",
+    "tsdown": "0.23.0",
+    "typescript": "~6.0.3",
+    "xo": "^5.0.1"
+  },
+  "allowScripts": {
+    "unrs-resolver": false
   }
 }
