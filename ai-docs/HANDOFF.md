@@ -8,6 +8,7 @@ Updated 2026-09-25 (night). 2.0.0-beta.1 is live under `next` and verified from 
 
 - Plan and evidence: [plans/2026-09-25-modernization-and-v2-release.md](plans/2026-09-25-modernization-and-v2-release.md), [log.md](log.md).
 - The merged branch `v2` still exists on GitHub; delete it with the maintainer's OK.
+- 2026-09-30: the GitHub wiki for 2.0.0 is written and committed in `..\replace-string-at-position.wiki` (21af852) but **not pushed**; push it, then run `wikiwright.py live`. How it was verified, 7 doc inaccuracies for the next release, and the update steps: [notes/2026-09-30-github-wiki.md](notes/2026-09-30-github-wiki.md). npm now has no `next` tag (the line above about `next` is history), and TypeScript 7 fails the `node10` consumer fixtures (TS5108) when the repository upgrades.
 
 ## In progress
 
