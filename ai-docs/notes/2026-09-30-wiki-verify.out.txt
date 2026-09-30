@@ -1,0 +1,335 @@
+## installed
+replace-string-at-position@2.0.0 on Node v24.18.0
+
+## esm exports
+[
+  "default",
+  "replaceStringAtPosition"
+]
+
+## cjs exports
+[
+  "default",
+  "replaceStringAtPosition"
+]
+
+## Home: first call
+hello there
+
+## Getting started: ESM
+232
+true
+
+## Getting started: CommonJS
+232
+true true
+
+## bun version
+1.4.2
+
+## Getting started: ESM under Bun
+232
+true
+
+## Getting started: CommonJS under Bun
+232
+true true
+
+## deno version
+deno 2.9.6 (stable, release, x86_64-pc-windows-msvc)
+
+## Getting started: Deno
+232
+
+## Getting started: TypeScript nodenext ESM
+TypeScript 7.0.2, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc true
+TypeScript 6.0.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc true
+TypeScript 5.9.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc true
+
+## Getting started: TypeScript nodenext CommonJS, import = require
+TypeScript 7.0.2, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc aYc
+TypeScript 6.0.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc aYc
+TypeScript 5.9.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc aYc
+
+## Getting started: TypeScript nodenext CommonJS, default import
+TypeScript 7.0.2, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc
+TypeScript 6.0.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc
+TypeScript 5.9.3, --module nodenext --moduleResolution nodenext: tsc exit 0
+aXc
+
+## Getting started: TypeScript bundler
+TypeScript 7.0.2, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+TypeScript 6.0.3, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+TypeScript 5.9.3, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+
+## Getting started: TypeScript node10
+TypeScript 7.0.2, --module commonjs --moduleResolution node10 --ignoreDeprecations 6.0: tsc exit 2
+error TS5108: Option 'moduleResolution=node10' has been removed. Please remove it from your configuration.
+TypeScript 6.0.3, --module commonjs --moduleResolution node10 --ignoreDeprecations 6.0: tsc exit 0
+aXc
+TypeScript 5.9.3, --module commonjs --moduleResolution node10: tsc exit 0
+aXc
+
+## Getting started: TypeScript node10, esModuleInterop off
+TypeScript 7.0.2, --module commonjs --moduleResolution node10 --esModuleInterop false --ignoreDeprecations 6.0: tsc exit 2
+error TS5108: Option 'esModuleInterop=false' has been removed. Please remove it from your configuration.
+error TS5108: Option 'moduleResolution=node10' has been removed. Please remove it from your configuration.
+TypeScript 6.0.3, --module commonjs --moduleResolution node10 --esModuleInterop false --ignoreDeprecations 6.0: tsc exit 0
+aXc aYc
+TypeScript 5.9.3, --module commonjs --moduleResolution node10 --esModuleInterop false: tsc exit 0
+aXc aYc
+
+## Consumers: the type assertions
+nodenext ESM: TypeScript 7.0.2, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+nodenext ESM: TypeScript 6.0.3, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+nodenext ESM: TypeScript 5.9.3, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+nodenext CommonJS: TypeScript 7.0.2, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+nodenext CommonJS: TypeScript 6.0.3, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+nodenext CommonJS: TypeScript 5.9.3, --module nodenext --moduleResolution nodenext --noEmit: tsc exit 0
+bundler: TypeScript 7.0.2, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+bundler: TypeScript 6.0.3, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+bundler: TypeScript 5.9.3, --module esnext --moduleResolution bundler --noEmit: tsc exit 0
+
+## Getting started: TypeScript type error
+TypeScript 7.0.2, --module nodenext --moduleResolution nodenext: tsc exit 2
+index.mts(3,42): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+## API reference: CommonJS shape
+function replaceStringAtPosition 4
+[ 'default', 'replaceStringAtPosition' ]
+
+## API reference: ESM shape
+[ 'default', 'replaceStringAtPosition' ]
+true undefined
+
+## API reference: two copies
+false
+
+## Behaviour: the formula
+abXef
+abXef
+
+## Behaviour: only the length counts
+'abclo'
+'aXdef'
+'aX'
+
+## Behaviour: insert, delete, append
+'aXbc'
+'ac'
+'abcY'
+'X'
+'Xbc'
+
+## Behaviour: UTF-16 code units
+2
+'aXb'
+'😀x'
+'\ud83dXb'
+
+## Behaviour: combining marks
+3 5
+Eté
+Été
+
+## Behaviour: String objects
+aXc
+
+## Behaviour: extra arguments
+'aXc'
+
+## Errors: text arguments
+TypeError: Expected `originalString` to be a string, got null
+TypeError: Expected `originalString` to be a string, got undefined
+TypeError: Expected `originalString` to be a string, got 12345
+TypeError: Expected `originalString` to be a string, got an array
+TypeError: Expected `sourceString` to be a string, got an object
+TypeError: Expected `sourceString` to be a string, got an array
+TypeError: Expected `newString` to be a string, got 5
+TypeError: Expected `newString` to be a string, got null
+TypeError: Expected `newString` to be a string, got a boolean
+TypeError: Expected `newString` to be a string, got a bigint
+TypeError: Expected `newString` to be a string, got a symbol
+TypeError: Expected `newString` to be a string, got a function
+
+## Errors: the attempt helper
+"aXc"
+
+## Errors: position type
+TypeError: Expected `position` to be a number, got undefined
+TypeError: Expected `position` to be a number, got null
+TypeError: Expected `position` to be a number, got the string "1"
+TypeError: Expected `position` to be a number, got the string "a very long position..."
+TypeError: Expected `position` to be a number, got a boolean
+TypeError: Expected `position` to be a number, got an array
+TypeError: Expected `position` to be a number, got a bigint
+TypeError: Expected `position` to be a number, got an object
+
+## Errors: position range
+RangeError: Expected `position` to be an integer from 0 to 3, got -1
+RangeError: Expected `position` to be an integer from 0 to 3, got 1.5
+RangeError: Expected `position` to be an integer from 0 to 3, got NaN
+RangeError: Expected `position` to be an integer from 0 to 3, got 4
+RangeError: Expected `position` to be an integer from 0 to 3, got Infinity
+RangeError: Expected `position` to be an integer from 0 to 3, got 9007199254740992
+RangeError: Expected `position` to be an integer from 0 to 0, got 1
+
+## Errors: order of checks
+TypeError: Expected `originalString` to be a string, got null
+TypeError: Expected `sourceString` to be a string, got null
+TypeError: Expected `newString` to be a string, got 5
+
+## Errors: proxies and wrappers
+TypeError: Expected `sourceString` to be a string, got an object
+"aXc"
+
+## Errors: indexOf found nothing
+-1
+true Expected `position` to be an integer from 0 to 19, got -1
+
+## Errors: error objects have no code or extra fields
+{
+  "name": "TypeError",
+  "ownKeys": [
+    "stack",
+    "message"
+  ],
+  "code": "<undefined>",
+  "isTypeError": true
+}
+
+## Recipes: one match by its index
+See https://example.com and <link>.
+
+## Recipes: every match, right to left
+Call <ana>, then <bo>.
+Call <ana>, then<bo>o.
+
+## Recipes: remove a mention
+hi please help
+
+## Recipes: replace only when the text is there
+hello there
+hello world
+
+## Recipes: code point positions
+4
+😀😀Ab
+
+## Recipes: several edits at known positions
+A quick brown dog
+
+## Versions: old version installed
+replace-string-at-position@1.0.4
+
+## Versions: 1.0.4
+"232"
+"hello there"
+"abcXabc"
+"aX"
+"Xabcdef"
+"aXcdef"
+"abcY"
+"anullcdef"
+"item #5"
+"aXcdef"
+TypeError: Cannot read properties of null (reading 'substring')
+
+## Versions: deep import on 1.0.4
+loaded
+
+## Versions: 2.0.0
+"232"
+"hello there"
+TypeError: Expected `position` to be a number, got undefined
+TypeError: Expected `position` to be a number, got the string "1"
+RangeError: Expected `position` to be an integer from 0 to 6, got -1
+RangeError: Expected `position` to be an integer from 0 to 6, got 1.5
+RangeError: Expected `position` to be an integer from 0 to 3, got 10
+TypeError: Expected `newString` to be a string, got null
+TypeError: Expected `newString` to be a string, got 5
+TypeError: Expected `position` to be a number, got a boolean
+TypeError: Expected `originalString` to be a string, got null
+
+## Versions: deep import on 2.0.0
+ERR_PACKAGE_PATH_NOT_EXPORTED
+
+## golden: 1.0.4 today
+replace-string-at-position@1.0.4: 71 cases in the golden file, 71 replayed
+results: 71 identical, 0 differ
+quirk requireResult: same
+quirk functionName: same
+quirk functionLength: same
+quirk ownKeys: same
+quirk symbolReplacement: same
+quirk symbolPosition: same
+quirk detachedCall: same
+quirk binField: same
+
+## golden: 2.0.0
+replace-string-at-position@2.0.0: 71 cases in the golden file, 71 replayed
+results: 26 identical, 45 differ
+  now throws RangeError: 13
+  now throws TypeError: 32
+#13 ("","","X",5): "X" -> {"$throws":"Expected `position` to be an integer from 0 to 0, got 5","$error":"RangeError"}
+#16 ("abc","x","Y",10): "abcY" -> {"$throws":"Expected `position` to be an integer from 0 to 3, got 10","$error":"RangeError"}
+#18 ("abc","x","Y",9007199254740992): "abcY" -> {"$throws":"Expected `position` to be an integer from 0 to 3, got 9007199254740992","$error":"RangeError"}
+#19 ("abc","x","Y",1.7976931348623157e+308): "abcY" -> {"$throws":"Expected `position` to be an integer from 0 to 3, got 1.7976931348623157e+308","$error":"RangeError"}
+#20 ("abc","x","Y",{"$number":"Infinity"}): "abcY" -> {"$throws":"Expected `position` to be an integer from 0 to 3, got Infinity","$error":"RangeError"}
+#21 ("abcdef","b","X",-1): "Xabcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got -1","$error":"RangeError"}
+#22 ("abcdef","bc","X",-1): "Xbcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got -1","$error":"RangeError"}
+#23 ("abcdef","bcd","X",-1): "Xcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got -1","$error":"RangeError"}
+#24 ("abcdef","b","X",-5): "Xabcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got -5","$error":"RangeError"}
+#25 ("abcdef","b","X",{"$number":"-Infinity"}): "Xabcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got -Infinity","$error":"RangeError"}
+#27 ("abcdef","b","X",1.5): "aXcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got 1.5","$error":"RangeError"}
+#28 ("abcdef","b","X",1.9): "aXcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got 1.9","$error":"RangeError"}
+#29 ("abcdef","b","X",{"$number":"NaN"}): "Xabcdef" -> {"$throws":"Expected `position` to be an integer from 0 to 6, got NaN","$error":"RangeError"}
+#30 ("abcdef","b","X",{"$undefined":true}): "abcdefXabcdef" -> {"$throws":"Expected `position` to be a number, got undefined","$error":"TypeError"}
+#31 ("abcdef","b","X",null): "Xbcdef" -> {"$throws":"Expected `position` to be a number, got null","$error":"TypeError"}
+#32 ("abcdef","b","X","1"): "aX" -> {"$throws":"Expected `position` to be a number, got the string \"1\"","$error":"TypeError"}
+#33 ("abcdef","b","X",""): "Xbcdef" -> {"$throws":"Expected `position` to be a number, got the string \"\"","$error":"TypeError"}
+#34 ("abcdef","b","X","x"): "Xabcdef" -> {"$throws":"Expected `position` to be a number, got the string \"x\"","$error":"TypeError"}
+#35 ("abcdef","b","X",true): "aXcdef" -> {"$throws":"Expected `position` to be a number, got a boolean","$error":"TypeError"}
+#36 ("abcdef","b","X",[2]): "abX" -> {"$throws":"Expected `position` to be a number, got an array","$error":"TypeError"}
+#37 ("abcdef","b","X",{"$bigint":"1"}): {"$throws":"Cannot convert a BigInt value to a number","$error":"TypeError"} -> {"$throws":"Expected `position` to be a number, got a bigint","$error":"TypeError"}
+#38 ("abcdef","b","X",{"$new":"Number","value":2}): "abXdef" -> {"$throws":"Expected `position` to be a number, got an object","$error":"TypeError"}
+#44 (null,"a","X",0): {"$throws":"Cannot read properties of null (reading 'substring')","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got null","$error":"TypeError"}
+#45 ({"$undefined":true},"a","X",0): {"$throws":"Cannot read properties of undefined (reading 'substring')","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got undefined","$error":"TypeError"}
+#46 (12345,"3","X",2): {"$throws":"originalString.substring is not a function","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got 12345","$error":"TypeError"}
+#47 (["a","b","c"],"b","X",1): {"$throws":"originalString.substring is not a function","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got an array","$error":"TypeError"}
+#48 ({},"a","X",0): {"$throws":"originalString.substring is not a function","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got an object","$error":"TypeError"}
+#50 (true,"r","X",1): {"$throws":"originalString.substring is not a function","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got a boolean","$error":"TypeError"}
+#51 ("abcdef",null,"X",1): {"$throws":"Cannot read properties of null (reading 'length')","$error":"TypeError"} -> {"$throws":"Expected `sourceString` to be a string, got null","$error":"TypeError"}
+#52 ("abcdef",{"$undefined":true},"X",1): {"$throws":"Cannot read properties of undefined (reading 'length')","$error":"TypeError"} -> {"$throws":"Expected `sourceString` to be a string, got undefined","$error":"TypeError"}
+#53 ("abcdef",5,"X",1): "aXabcdef" -> {"$throws":"Expected `sourceString` to be a string, got 5","$error":"TypeError"}
+#54 ("abcdef",["q","r"],"X",1): "aXdef" -> {"$throws":"Expected `sourceString` to be a string, got an array","$error":"TypeError"}
+#55 ("abcdef",{"length":3},"X",1): "aXef" -> {"$throws":"Expected `sourceString` to be a string, got an object","$error":"TypeError"}
+#56 ("abcdef",{"length":"2"},"X",1): "aX" -> {"$throws":"Expected `sourceString` to be a string, got an object","$error":"TypeError"}
+#58 ("abcdef",{},"X",1): "aXabcdef" -> {"$throws":"Expected `sourceString` to be a string, got an object","$error":"TypeError"}
+#59 ("abcdef","b",null,1): "anullcdef" -> {"$throws":"Expected `newString` to be a string, got null","$error":"TypeError"}
+#60 ("abcdef","b",{"$undefined":true},1): "aundefinedcdef" -> {"$throws":"Expected `newString` to be a string, got undefined","$error":"TypeError"}
+#61 ("abcdef","b",42,1): "a42cdef" -> {"$throws":"Expected `newString` to be a string, got 42","$error":"TypeError"}
+#62 ("abcdef","b",{},1): "a[object Object]cdef" -> {"$throws":"Expected `newString` to be a string, got an object","$error":"TypeError"}
+#63 ("abcdef","b",["x","y"],1): "ax,ycdef" -> {"$throws":"Expected `newString` to be a string, got an array","$error":"TypeError"}
+#65 ("abcdef","b",{"$bigint":"1"},1): "a1cdef" -> {"$throws":"Expected `newString` to be a string, got a bigint","$error":"TypeError"}
+#66 (): {"$throws":"Cannot read properties of undefined (reading 'length')","$error":"TypeError"} -> {"$throws":"Expected `originalString` to be a string, got undefined","$error":"TypeError"}
+#67 ("abc"): {"$throws":"Cannot read properties of undefined (reading 'length')","$error":"TypeError"} -> {"$throws":"Expected `sourceString` to be a string, got undefined","$error":"TypeError"}
+#68 ("abc","b"): "abcundefinedabc" -> {"$throws":"Expected `newString` to be a string, got undefined","$error":"TypeError"}
+#69 ("abc","b","X"): "abcXabc" -> {"$throws":"Expected `position` to be a number, got undefined","$error":"TypeError"}
+quirk requireResult: same
+quirk functionName: same
+quirk functionLength: same
+quirk ownKeys: ["length","name","prototype"] -> ["length","name","prototype","default","replaceStringAtPosition"]
+quirk symbolReplacement: {"$throws":"Cannot convert a Symbol value to a string","$error":"TypeError"} -> {"$throws":"Expected `newString` to be a string, got a symbol","$error":"TypeError"}
+quirk symbolPosition: {"$throws":"Cannot convert a Symbol value to a number","$error":"TypeError"} -> {"$throws":"Expected `position` to be a number, got a symbol","$error":"TypeError"}
+quirk detachedCall: same
+quirk binField: same
+
