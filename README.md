@@ -83,6 +83,10 @@ Every call with three strings and an integer position from 0 to the text's lengt
 
 It does not search: it replaces at the position you give, whatever is there. It has no regular expressions, no "replace all" and no Unicode-aware positions (grapheme clusters or code points); use `String.prototype.replace` or `replaceAll` for those. It runs in time linear in the length of the text.
 
+## Package page
+
+- npm: [replace-string-at-position](https://www.npmjs.com/package/replace-string-at-position)
+
 ## License
 
 MIT, see [LICENSE](LICENSE).
